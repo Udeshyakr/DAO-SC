@@ -9,10 +9,6 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
 contract MangoToken is ERC20, Ownable, ERC20Permit, ERC20Votes {
     constructor() ERC20("MangoToken", "MTK") ERC20Permit("MangoToken") {}
 
-    function mint(address to, uint256 amount) public onlyOwner {
-        _mint(to, amount);
-    }
-
     // The following functions are overrides required by Solidity.
 
     function _afterTokenTransfer(address from, address to, uint256 amount)
@@ -34,5 +30,9 @@ contract MangoToken is ERC20, Ownable, ERC20Permit, ERC20Votes {
         override(ERC20, ERC20Votes)
     {
         super._burn(account, amount);
+    }
+
+    function mint(address to, uint256 amount) public onlyOwner {
+        _mint(to, amount ** 18 ** decimals());
     }
 }
